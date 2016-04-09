@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KatalogDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="KatalogDataModelStoreContainer">
+    <EntitySet Name="DepartementSet" EntityType="KatalogDataModel.Store.DepartementSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SprachgruppeSet" EntityType="KatalogDataModel.Store.SprachgruppeSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DorfSet" EntityType="KatalogDataModel.Store.DorfSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="KategorieSet" EntityType="KatalogDataModel.Store.KategorieSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ObjektSet" EntityType="KatalogDataModel.Store.ObjektSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="DepartementDorf" Association="KatalogDataModel.Store.DepartementDorf">
+      <End Role="Departement" EntitySet="DepartementSet" />
+      <End Role="Dorf" EntitySet="DorfSet" />
+    </AssociationSet>
+    <AssociationSet Name="SprachgruppeDorf" Association="KatalogDataModel.Store.SprachgruppeDorf">
+      <End Role="Sprachgruppe" EntitySet="SprachgruppeSet" />
+      <End Role="Dorf" EntitySet="DorfSet" />
+    </AssociationSet>
+    <AssociationSet Name="DorfObjekt" Association="KatalogDataModel.Store.DorfObjekt">
+      <End Role="Dorf" EntitySet="DorfSet" />
+      <End Role="Objekt" EntitySet="ObjektSet" />
+    </AssociationSet>
+    <AssociationSet Name="KategorieObjekt" Association="KatalogDataModel.Store.KategorieObjekt">
+      <End Role="Kategorie" EntitySet="KategorieSet" />
+      <End Role="Objekt" EntitySet="ObjektSet" />
+    </AssociationSet>
+    <AssociationSet Name="KategorieKategorie" Association="KatalogDataModel.Store.KategorieKategorie">
+      <End Role="Kategorie" EntitySet="KategorieSet" />
+      <End Role="Kategorie1" EntitySet="KategorieSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="DepartementSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SprachgruppeSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DorfSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Departement_Id" Type="int" Nullable="false" />
+    <Property Name="Sprachgruppe_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="KategorieSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Oberkategorie_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ObjektSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ObjektNummer" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ObjektName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Bilder" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Herkunft" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="BeschreibungMaterial" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="BeschreibungHerstellung" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Zustand" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Masse" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ErworbenBei" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Datierung" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Versicherungswert" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Dorf_Id" Type="int" Nullable="false" />
+    <Property Name="Kategorie_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="DepartementDorf">
+    <End Role="Departement" Type="KatalogDataModel.Store.DepartementSet" Multiplicity="1" />
+    <End Role="Dorf" Type="KatalogDataModel.Store.DorfSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departement">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Dorf">
+        <PropertyRef Name="Departement_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SprachgruppeDorf">
+    <End Role="Sprachgruppe" Type="KatalogDataModel.Store.SprachgruppeSet" Multiplicity="1" />
+    <End Role="Dorf" Type="KatalogDataModel.Store.DorfSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sprachgruppe">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Dorf">
+        <PropertyRef Name="Sprachgruppe_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DorfObjekt">
+    <End Role="Dorf" Type="KatalogDataModel.Store.DorfSet" Multiplicity="1" />
+    <End Role="Objekt" Type="KatalogDataModel.Store.ObjektSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dorf">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Objekt">
+        <PropertyRef Name="Dorf_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="KategorieObjekt">
+    <End Role="Kategorie" Type="KatalogDataModel.Store.KategorieSet" Multiplicity="1" />
+    <End Role="Objekt" Type="KatalogDataModel.Store.ObjektSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategorie">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Objekt">
+        <PropertyRef Name="Kategorie_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="KategorieKategorie">
+    <End Role="Kategorie" Type="KatalogDataModel.Store.KategorieSet" Multiplicity="1" />
+    <End Role="Kategorie1" Type="KatalogDataModel.Store.KategorieSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategorie">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Kategorie1">
+        <PropertyRef Name="Oberkategorie_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

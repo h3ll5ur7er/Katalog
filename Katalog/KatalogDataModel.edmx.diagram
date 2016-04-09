@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5a86d43964c64f76b803ef674f251624" Name="Diagram1" ZoomLevel="197" >
+        <EntityTypeShape EntityType="KatalogDataModel.Departement" Width="1.5" PointX="0.5" PointY="1.125" />
+        <EntityTypeShape EntityType="KatalogDataModel.Sprachgruppe" Width="1.5" PointX="2.25" PointY="1.125" />
+        <EntityTypeShape EntityType="KatalogDataModel.Dorf" Width="1.5" PointX="1.375" PointY="3.25" />
+        <AssociationConnector Association="KatalogDataModel.DepartementDorf" />
+        <AssociationConnector Association="KatalogDataModel.SprachgruppeDorf" />
+        <EntityTypeShape EntityType="KatalogDataModel.Kategorie" Width="1.5" PointX="5.5" PointY="3.375" />
+        <EntityTypeShape EntityType="KatalogDataModel.Objekt" Width="1.5" PointX="3.25" PointY="6" />
+        <AssociationConnector Association="KatalogDataModel.DorfObjekt" />
+        <AssociationConnector Association="KatalogDataModel.KategorieObjekt" />
+        <AssociationConnector Association="KatalogDataModel.KategorieKategorie" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

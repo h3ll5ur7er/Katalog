@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="KatalogDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="KatalogDataModelContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DepartementSet" EntityType="KatalogDataModel.Departement" />
+    <EntitySet Name="SprachgruppeSet" EntityType="KatalogDataModel.Sprachgruppe" />
+    <EntitySet Name="DorfSet" EntityType="KatalogDataModel.Dorf" />
+    <AssociationSet Name="DepartementDorf" Association="KatalogDataModel.DepartementDorf">
+      <End Role="Departement" EntitySet="DepartementSet" />
+      <End Role="Dorf" EntitySet="DorfSet" />
+    </AssociationSet>
+    <AssociationSet Name="SprachgruppeDorf" Association="KatalogDataModel.SprachgruppeDorf">
+      <End Role="Sprachgruppe" EntitySet="SprachgruppeSet" />
+      <End Role="Dorf" EntitySet="DorfSet" />
+    </AssociationSet>
+    <EntitySet Name="KategorieSet" EntityType="KatalogDataModel.Kategorie" />
+    <EntitySet Name="ObjektSet" EntityType="KatalogDataModel.Objekt" />
+    <AssociationSet Name="DorfObjekt" Association="KatalogDataModel.DorfObjekt">
+      <End Role="Dorf" EntitySet="DorfSet" />
+      <End Role="Objekt" EntitySet="ObjektSet" />
+    </AssociationSet>
+    <AssociationSet Name="KategorieObjekt" Association="KatalogDataModel.KategorieObjekt">
+      <End Role="Kategorie" EntitySet="KategorieSet" />
+      <End Role="Objekt" EntitySet="ObjektSet" />
+    </AssociationSet>
+    <AssociationSet Name="KategorieKategorie" Association="KatalogDataModel.KategorieKategorie">
+      <End Role="Kategorie" EntitySet="KategorieSet" />
+      <End Role="Kategorie1" EntitySet="KategorieSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Departement">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <NavigationProperty Name="Dorf" Relationship="KatalogDataModel.DepartementDorf" FromRole="Departement" ToRole="Dorf" />
+  </EntityType>
+  <EntityType Name="Sprachgruppe">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <NavigationProperty Name="Dorf" Relationship="KatalogDataModel.SprachgruppeDorf" FromRole="Sprachgruppe" ToRole="Dorf" />
+  </EntityType>
+  <EntityType Name="Dorf">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <NavigationProperty Name="Departement" Relationship="KatalogDataModel.DepartementDorf" FromRole="Dorf" ToRole="Departement" />
+    <NavigationProperty Name="Sprachgruppe" Relationship="KatalogDataModel.SprachgruppeDorf" FromRole="Dorf" ToRole="Sprachgruppe" />
+    <NavigationProperty Name="Objekt" Relationship="KatalogDataModel.DorfObjekt" FromRole="Dorf" ToRole="Objekt" />
+  </EntityType>
+  <Association Name="DepartementDorf">
+    <End Type="KatalogDataModel.Departement" Role="Departement" Multiplicity="1" />
+    <End Type="KatalogDataModel.Dorf" Role="Dorf" Multiplicity="*" />
+  </Association>
+  <Association Name="SprachgruppeDorf">
+    <End Type="KatalogDataModel.Sprachgruppe" Role="Sprachgruppe" Multiplicity="1" />
+    <End Type="KatalogDataModel.Dorf" Role="Dorf" Multiplicity="*" />
+  </Association>
+  <EntityType Name="Kategorie">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <NavigationProperty Name="Objekt" Relationship="KatalogDataModel.KategorieObjekt" FromRole="Kategorie" ToRole="Objekt" />
+    <NavigationProperty Name="Unterkategorie" Relationship="KatalogDataModel.KategorieKategorie" FromRole="Kategorie" ToRole="Kategorie1" />
+    <NavigationProperty Name="Oberkategorie" Relationship="KatalogDataModel.KategorieKategorie" FromRole="Kategorie1" ToRole="Kategorie" />
+  </EntityType>
+  <EntityType Name="Objekt">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Dorf" Relationship="KatalogDataModel.DorfObjekt" FromRole="Objekt" ToRole="Dorf" />
+    <NavigationProperty Name="Kategorie" Relationship="KatalogDataModel.KategorieObjekt" FromRole="Objekt" ToRole="Kategorie" />
+    <Property Name="ObjektNummer" Type="String" Nullable="false" />
+    <Property Name="ObjektName" Type="String" Nullable="false" />
+    <Property Name="Bilder" Type="String" Nullable="false" />
+    <Property Name="Herkunft" Type="String" Nullable="false" />
+    <Property Name="BeschreibungMaterial" Type="String" Nullable="false" />
+    <Property Name="BeschreibungHerstellung" Type="String" Nullable="false" />
+    <Property Name="Zustand" Type="String" Nullable="false" />
+    <Property Name="Masse" Type="String" Nullable="false" />
+    <Property Name="ErworbenBei" Type="String" Nullable="false" />
+    <Property Name="Datierung" Type="String" Nullable="false" />
+    <Property Name="Versicherungswert" Type="String" Nullable="false" />
+  </EntityType>
+  <Association Name="DorfObjekt">
+    <End Type="KatalogDataModel.Dorf" Role="Dorf" Multiplicity="1" />
+    <End Type="KatalogDataModel.Objekt" Role="Objekt" Multiplicity="*" />
+  </Association>
+  <Association Name="KategorieObjekt">
+    <End Type="KatalogDataModel.Kategorie" Role="Kategorie" Multiplicity="1" />
+    <End Type="KatalogDataModel.Objekt" Role="Objekt" Multiplicity="*" />
+  </Association>
+  <Association Name="KategorieKategorie">
+    <End Type="KatalogDataModel.Kategorie" Role="Kategorie" Multiplicity="1" />
+    <End Type="KatalogDataModel.Kategorie" Role="Kategorie1" Multiplicity="*" />
+  </Association>
+</Schema>

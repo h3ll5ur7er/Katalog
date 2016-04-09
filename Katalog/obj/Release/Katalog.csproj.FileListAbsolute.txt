@@ -1,0 +1,41 @@
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\Katalog.exe.config
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\KatalogDatabase.mdf
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\KatalogDatabase_log.ldf
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\Katalog.exe
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\Katalog.pdb
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\EntityFramework.dll
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\EntityFramework.SqlServer.dll
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\EntityFramework.xml
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\EntityFramework.SqlServer.xml
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\MainWindow.g.cs
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\ObjectControl.g.cs
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\App.g.cs
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\Katalog_Content.g.cs
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\GeneratedInternalTypeHelper.g.cs
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\Katalog_MarkupCompile.cache
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\Katalog_MarkupCompile.lref
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\MainWindow.baml
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\ObjectControl.baml
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\Katalog.g.resources
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\Katalog.Properties.Resources.resources
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\Katalog.csproj.GenerateResource.Cache
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\Katalog.exe
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\Katalog.pdb
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\Microsoft.SqlServer.ConnectionInfo.dll
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\Microsoft.SqlServer.Management.Sdk.Sfc.dll
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\Microsoft.SqlServer.Smo.dll
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\Microsoft.SqlServer.SmoExtended.dll
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\Microsoft.SqlServer.SqlEnum.dll
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\Microsoft.SqlServer.Dmf.dll
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\Microsoft.SqlServer.ServiceBrokerEnum.dll
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\Microsoft.SqlServer.RegSvrEnum.dll
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\de\Microsoft.SqlServer.Management.Sdk.Sfc.resources.dll
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\de\Microsoft.SqlServer.Dmf.resources.dll
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\bin\Release\de\Microsoft.SqlServer.RegSvrEnum.resources.dll
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\App.baml
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\Resources\Styles.baml
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\PageSelectorControl.g.cs
+D:\Benutzerdaten\Emma\Documents\Visual Studio 2015\Projects\Katalog\Katalog\obj\Release\PageSelectorControl.baml
+D:\_code\git\Katalog\Katalog\bin\Release\Katalog.exe.config
+D:\_code\git\Katalog\Katalog\obj\Release\Katalog.exe
+D:\_code\git\Katalog\Katalog\obj\Release\Katalog.pdb

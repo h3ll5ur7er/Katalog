@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="KatalogDataModelStoreContainer" CdmEntityContainer="KatalogDataModelContainer">
+    <EntitySetMapping Name="DepartementSet">
+      <EntityTypeMapping TypeName="IsTypeOf(KatalogDataModel.Departement)">
+        <MappingFragment StoreEntitySet="DepartementSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SprachgruppeSet">
+      <EntityTypeMapping TypeName="IsTypeOf(KatalogDataModel.Sprachgruppe)">
+        <MappingFragment StoreEntitySet="SprachgruppeSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DorfSet">
+      <EntityTypeMapping TypeName="IsTypeOf(KatalogDataModel.Dorf)">
+        <MappingFragment StoreEntitySet="DorfSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KategorieSet">
+      <EntityTypeMapping TypeName="IsTypeOf(KatalogDataModel.Kategorie)">
+        <MappingFragment StoreEntitySet="KategorieSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ObjektSet">
+      <EntityTypeMapping TypeName="IsTypeOf(KatalogDataModel.Objekt)">
+        <MappingFragment StoreEntitySet="ObjektSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ObjektNummer" ColumnName="ObjektNummer" />
+          <ScalarProperty Name="ObjektName" ColumnName="ObjektName" />
+          <ScalarProperty Name="Bilder" ColumnName="Bilder" />
+          <ScalarProperty Name="Herkunft" ColumnName="Herkunft" />
+          <ScalarProperty Name="BeschreibungMaterial" ColumnName="BeschreibungMaterial" />
+          <ScalarProperty Name="BeschreibungHerstellung" ColumnName="BeschreibungHerstellung" />
+          <ScalarProperty Name="Zustand" ColumnName="Zustand" />
+          <ScalarProperty Name="Masse" ColumnName="Masse" />
+          <ScalarProperty Name="ErworbenBei" ColumnName="ErworbenBei" />
+          <ScalarProperty Name="Datierung" ColumnName="Datierung" />
+          <ScalarProperty Name="Versicherungswert" ColumnName="Versicherungswert" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="DepartementDorf" TypeName="KatalogDataModel.DepartementDorf" StoreEntitySet="DorfSet">
+      <EndProperty Name="Departement">
+        <ScalarProperty Name="Id" ColumnName="Departement_Id" />
+      </EndProperty>
+      <EndProperty Name="Dorf">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SprachgruppeDorf" TypeName="KatalogDataModel.SprachgruppeDorf" StoreEntitySet="DorfSet">
+      <EndProperty Name="Sprachgruppe">
+        <ScalarProperty Name="Id" ColumnName="Sprachgruppe_Id" />
+      </EndProperty>
+      <EndProperty Name="Dorf">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="DorfObjekt" TypeName="KatalogDataModel.DorfObjekt" StoreEntitySet="ObjektSet">
+      <EndProperty Name="Dorf">
+        <ScalarProperty Name="Id" ColumnName="Dorf_Id" />
+      </EndProperty>
+      <EndProperty Name="Objekt">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="KategorieObjekt" TypeName="KatalogDataModel.KategorieObjekt" StoreEntitySet="ObjektSet">
+      <EndProperty Name="Kategorie">
+        <ScalarProperty Name="Id" ColumnName="Kategorie_Id" />
+      </EndProperty>
+      <EndProperty Name="Objekt">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="KategorieKategorie" TypeName="KatalogDataModel.KategorieKategorie" StoreEntitySet="KategorieSet">
+      <EndProperty Name="Kategorie">
+        <ScalarProperty Name="Id" ColumnName="Oberkategorie_Id" />
+      </EndProperty>
+      <EndProperty Name="Kategorie1">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

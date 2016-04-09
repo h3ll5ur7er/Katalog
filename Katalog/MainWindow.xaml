@@ -1,0 +1,477 @@
+﻿<Window x:Name="window" x:Class="Katalog.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Katalog"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        d:DataContext="{StaticResource MainViewModel}"
+        Title="Katalog" Height="600" Width="800" FontSize="15">
+    <Grid x:Name="ContentRoot" Height="Auto" Width="Auto">
+        <Grid x:Name="AddObjectPanel" Height="Auto" Width="Auto" Visibility="{Binding AddPanelVisibility}"
+              local:GridExtention.CompactRowDefinitions="* auto" local:GridExtention.CompactColumnDefinitions="* auto">
+            <Grid Grid.Row="0" Grid.Column="0">
+                <ScrollViewer>
+                    <StackPanel DataContext="{Binding NewObject}" Margin="30 30 30 30">
+                        <Grid local:GridExtention.CompactRowDefinitions="auto auto">
+                            <HeaderedContentControl Grid.Row="0" Header="Objektnummer">
+                                <TextBox x:Name="ObjectNumberBox" TabIndex="1" Text="{Binding ObjektNummer}"/>
+                            </HeaderedContentControl>
+                            <HeaderedContentControl Grid.Row="1" Header="Objektname">
+                                <TextBox x:Name="ObjectNameBox" TabIndex="2" Text="{Binding ObjektName}"/>
+                            </HeaderedContentControl>
+                        </Grid>
+                        <Grid x:Name="Selectors" local:GridExtention.CompactColumnDefinitions="* *">
+                            <HeaderedContentControl Header="Herkunft" Grid.Column="0">
+                                <ComboBox x:Name="VillageSelector" ItemsSource="{Binding Dörfer}" TabIndex="3" SelectedItem="{Binding Dorf}" TextSearch.TextPath="Name">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid local:GridExtention.CompactRowDefinitions="* *" local:GridExtention.CompactColumnDefinitions="* *">
+                                                <TextBlock FontSize="23" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding Name}"/>
+                                                <HeaderedContentControl Header="Sprachgruppe" Grid.Column="0" Grid.Row="1" DataContext="{Binding Sprachgruppe}" IsTabStop="False">
+                                                    <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Text ="{Binding Name}"/>
+                                                </HeaderedContentControl>
+                                                <HeaderedContentControl Header="Departement" Margin="20,0,0,0" Grid.Column="1" Grid.Row="1"  DataContext="{Binding Departement}" IsTabStop="False">
+                                                    <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Text ="{Binding Name}"/>
+                                                </HeaderedContentControl>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </HeaderedContentControl>
+                            <HeaderedContentControl Header="Kategorie" Grid.Column="1">
+                                <ComboBox x:Name="CategorySelector" ItemsSource="{Binding Kategorien}" SelectedItem="{Binding Kategorie}"  TabIndex="4">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <HeaderedContentControl Header="{Binding Crumb}" IsTabStop="False">
+                                                    <TextBlock FontSize="23" Text="{Binding Name}" />
+                                                </HeaderedContentControl>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </HeaderedContentControl>
+                        </Grid>
+                        <StackPanel>
+                            <GroupBox Header="Beschreibung">
+                                <StackPanel MaxHeight="600">
+                                    <Label Content="Material"/>
+                                    <TextBox x:Name="MaterialdDescription" TextWrapping="Wrap" Height="Auto" MaxHeight="100" VerticalScrollBarVisibility="Auto" TabIndex="5" Text="{Binding BeschreibungMaterial}"></TextBox>
+                                    <Label Content="Herstellung"/>
+                                    <TextBox x:Name="ProcessingDescription" TextWrapping="Wrap" Height="Auto" MaxHeight="100" VerticalScrollBarVisibility="Auto" TabIndex="6" Text="{Binding BeschreibungHerstellung}"></TextBox>
+                                </StackPanel>
+                            </GroupBox>
+                            <Label Content="Zustand"/>
+                            <TextBox x:Name="Condition" TabIndex="7" Text="{Binding Zustand}"/>
+                            <Label Content="Masse"/>
+                            <TextBox x:Name="Measure" TabIndex="8" Text="{Binding Masse}"/>
+                            <Label Content="Erworben / Bei"/>
+                            <TextBox x:Name="Origin" TabIndex="9" Text="{Binding ErworbenBei}"/>
+                            <Label Content="Datierung"/>
+                            <TextBox x:Name="Date" TabIndex="10" Text="{Binding Datierung}"/>
+                            <Label Content="Versicherungswert"/>
+                            <TextBox x:Name="Value" TabIndex="11" Text="{Binding Versicherungswert}"/>
+                            <Label Content="Bemerkungen"/>
+                            <TextBox x:Name="Notes" TabIndex="12" Text="{Binding Herkunft}" TextWrapping="Wrap" Height="Auto" MaxHeight="100" VerticalScrollBarVisibility="Auto"/>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+            <Border Background="DarkSlateGray"  MinWidth="100" x:Name="FotoDropTarget" AllowDrop="True" Grid.Row ="0" Grid.Column="1" BorderBrush="DarkSlateGray" Drop="OnDropPicture">
+                <ListBox ItemsSource="{Binding Fotos}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Entfernen" Click="OnRemovePicture"/>
+                                    </ContextMenu>
+                                </Grid.ContextMenu>
+                                <Image MaxHeight="200" MaxWidth="200" Source="{Binding}">
+                                    <Image.ToolTip>
+                                        <ToolTip>
+                                            <Image Source="{Binding}"></Image>
+                                        </ToolTip>
+                                    </Image.ToolTip>
+                                </Image>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Height="50" local:GridExtention.CompactColumnDefinitions="* *">
+                <Button Grid.Column="0" Content="Speichern" Click="OnSave" TabIndex="13"/>
+                <Button Grid.Column="1" Content="Abbrechen" Click="OnCancle" TabIndex="14"/>
+            </Grid>
+        </Grid>
+
+        <Grid x:Name="MainPanel" Height="Auto" Width="Auto" Visibility="{Binding MainPanelVisibility}" local:GridExtention.CompactRowDefinitions="auto * auto auto">
+            <Grid Grid.Row="0" local:GridExtention.CompactColumnDefinitions="auto auto auto auto auto auto auto">
+                <Button Grid.Column="0" Click="OnNewObject" Padding="5" Margin="0 0 10 0">
+                    <Grid local:GridExtention.CompactRowDefinitions="* auto">
+                        <Image Grid.Row="0" Source="Assets/Icons/add-icon.png" MaxHeight="75" MaxWidth="75" Stretch="Uniform"/>
+                        <Label Grid.Row="1">Neu Erfassen</Label>
+                    </Grid>
+                </Button>
+                <ToggleButton Grid.Column="1" Click="OnFilter" Padding="5" Margin="0 0 10 0">
+                    <Grid local:GridExtention.CompactRowDefinitions="* auto">
+                        <Image Grid.Row="0" Source="Assets/Icons/filter-icon.png" MaxHeight="75" MaxWidth="75" Stretch="Uniform"/>
+                        <Label Grid.Row="1">Filter</Label>
+                    </Grid>
+                </ToggleButton>
+                <Button Grid.Column="2" Click="OnBackupObjects" Padding="5" Margin="0 0 10 0">
+                    <Grid local:GridExtention.CompactRowDefinitions="* auto">
+                        <Image Grid.Row="0" Source="Assets/Icons/backup-icon.png" MaxHeight="75" MaxWidth="75" Stretch="Uniform"/>
+                        <Label Grid.Row="1">Backup Speichern</Label>
+                    </Grid>
+                </Button>
+                <Button Grid.Column="3" Click="OnMetadata" Padding="5" Margin="0 0 10 0">
+                    <Grid local:GridExtention.CompactRowDefinitions="* auto">
+                        <Image Grid.Row="0" Source="Assets/Icons/meta-icon.png" MaxHeight="75" MaxWidth="75" Stretch="Uniform"/>
+                        <Label Grid.Row="1">Metadaten</Label>
+                    </Grid>
+                </Button>
+
+                <Button Grid.Column="4" Click="OnInfo" Padding="5" Margin="0 0 10 0">
+                    <Grid local:GridExtention.CompactRowDefinitions="* auto">
+                        <Image Grid.Row="0" Source="Assets/Icons/debug-icon.png" MaxHeight="75" MaxWidth="75" Stretch="Uniform"/>
+                        <Label Grid.Row="1">Restore</Label>
+                    </Grid>
+                </Button>
+            </Grid>
+            <Grid Grid.Row="2" HorizontalAlignment="Center">
+                <Grid.Resources>
+                    <local:DivideBy2Converter x:Key="DivideBy2Converter" />
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" MaxWidth="800"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Background="{Binding Background, ElementName=ContentRoot}" Foreground="{Binding Background, ElementName=ContentRoot}" MaxHeight="50" Grid.Column="0" Command="{Binding OnRightPageNavClick}" IsEnabled="{Binding IsLeftEnabled}">
+                    <Image Source="Assets/Icons/arrow-icon.png"  x:Name="LeftArrowImage">
+                        <Image.RenderTransform>
+                            <RotateTransform CenterX="{Binding ActualWidth,ElementName=LeftArrowImage, Converter={StaticResource DivideBy2Converter}}" CenterY="{Binding ActualHeight,ElementName=LeftArrowImage, Converter={StaticResource DivideBy2Converter}}" Angle="180"/>
+                        </Image.RenderTransform>
+                    </Image>
+                </Button>
+                <StackPanel Grid.Column="1">
+                    <Slider Margin="100 10 100 10"  Maximum="{Binding TotalPages}" Width="400" Minimum="1" Interval="1" Value="{Binding CurrentPage}" IsMoveToPointEnabled="True" Ticks="{Binding Ticks}" IsSnapToTickEnabled="True"/>
+                    <StackPanel Height="35" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBox Height="25" Text="{Binding CurrentPageString}" Width="50" TextAlignment="Center"></TextBox>
+                        <TextBlock Height="25" Margin="10 0 10 0" HorizontalAlignment="Center">
+                            <Run Text=" / "></Run>
+                            <Run Text="{Binding TotalPages, Mode=OneWay}"></Run>
+                        </TextBlock>
+                        <Button Width="50" Height="25"></Button>
+                    </StackPanel>
+                </StackPanel>
+
+                <Button Foreground="{Binding Background, ElementName=ContentRoot}" Background="{Binding Background, ElementName=ContentRoot}" MaxHeight="50" Grid.Column="2" Command="{Binding OnLeftPageNavClick}" IsEnabled="{Binding IsRightEnabled}">
+                    <Image  Source="Assets/Icons/arrow-icon.png"/>
+                </Button>
+            </Grid>
+            <ListBox x:Name="ObjectSelector" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" Grid.Row="1" ItemsSource="{Binding ObjekteFilteredPaged}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Button Click="OnElementSelected" MinWidth="60" MinHeight="60" Background="Transparent" BorderBrush="lightGray">
+                            <local:ObjectControl DataContext="{Binding}">
+                                <local:ObjectControl.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Entfernen" Click="DeleteObject"></MenuItem>
+                                    </ContextMenu>
+                                </local:ObjectControl.ContextMenu>
+                            </local:ObjectControl>
+                        </Button>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.ContainerStyle>
+                            <Style TargetType="{x:Type GroupItem}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <Expander IsExpanded="True" Header="{Binding Name}">
+                                                <ItemsPresenter />
+                                            </Expander>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.ContainerStyle>
+                    </GroupStyle>
+                </ListBox.GroupStyle>
+            </ListBox>
+            <Grid x:Name="FilterPanel" Grid.Row="3" Visibility="Collapsed" MaxHeight="300" local:GridExtention.CompactColumnDefinitions="auto auto auto auto *" local:GridExtention.CompactRowDefinitions="auto *">
+                <Label Grid.Row="0" Grid.Column="0">Departement</Label>
+                <ListBox Grid.Row="1"  x:Name="DepartementFilter" Grid.Column="0" ItemsSource="{Binding Departemnte}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Click="OnDepartementFilterSelectionChanged">
+                                <TextBlock Text="{Binding Name}"/>
+                            </CheckBox>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Label Grid.Row="0" Grid.Column="1">Sprachgruppen</Label>
+                <ListBox Grid.Row="1" x:Name="SprachgruppeFilter" Grid.Column="1" ItemsSource="{Binding Sprachgruppen}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Click="OnSprachgruppeFilterSelectionChanged">
+                                <TextBlock Text="{Binding Name}"/>
+                            </CheckBox>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Label Grid.Row="0" Grid.Column="2">Dörfer</Label>
+                <ListBox Grid.Row="1" x:Name="DorfFilter" Grid.Column="2" ItemsSource="{Binding DorfFilters}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Click="OnDorfFilterSelectionChanged">
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </CheckBox>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Label Grid.Row="0" Grid.Column="3">Kategorien</Label>
+                <ListBox Grid.Row="1" x:Name="KategogrieFilter" Grid.Column="3" ItemsSource="{Binding Kategorien}"  >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Click="OnKategorieFilterSelectionChanged">
+                                <TextBlock Text="{Binding Name}"/>
+                            </CheckBox>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Label Grid.Row="0" Grid.Column="4">Suchen</Label>
+                <Grid Grid.Row="1" Grid.Column="4">
+                    <TextBox x:Name="SearchTextBox" Text="{Binding SearchString}"></TextBox>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid x:Name="ViewPanel" Height="Auto" Width="Auto" Visibility="{Binding ViewPanelVisibility}">
+            <Grid DataContext="{Binding SelectedObject}" local:GridExtention.CompactRowDefinitions="* auto">
+                <Grid Grid.Row="1" Height="50" local:GridExtention.CompactColumnDefinitions="* *">
+                    <Button Grid.Column="0" Click="OnEdit">Bearbeiten</Button>
+                    <Button Grid.Column="1" Click="OnBack">Zurück</Button>
+                </Grid>
+                <Grid Grid.Row="0" local:GridExtention.CompactColumnDefinitions="2* *">
+                    <ListBox Grid.Column="1" ItemsSource="{Binding BilderSources}"  VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Image MaxHeight="250" MaxWidth="250" Source="{Binding}" ToolTipService.InitialShowDelay="3000">
+                                    <Image.ToolTip>
+                                        <ToolTip>
+                                            <Image Source="{Binding}"></Image>
+                                        </ToolTip>
+                                    </Image.ToolTip>
+                                </Image>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Grid Grid.Column="0">
+                        <ScrollViewer>
+                            <StackPanel Margin="30 30 30 30">
+                                <HeaderedContentControl Header="Objektnummer">
+                                    <TextBlock Padding="10 0 0 5" FontSize="20" Text="{Binding ObjektNummer}"/>
+                                </HeaderedContentControl>
+                                <HeaderedContentControl Header="Objektname">
+                                    <TextBlock Padding="10 0 0 5" FontSize="20"  Text="{Binding ObjektName}"/>
+                                </HeaderedContentControl>
+                                <HeaderedContentControl Header="Herkunft>Dorf">
+                                    <TextBlock Padding="10 0 0 5" FontSize="20"  Text="{Binding Dorf.Name}"/>
+                                </HeaderedContentControl>
+                                <HeaderedContentControl Header="Herkunft>Departement">
+                                    <TextBlock Padding="10 0 0 5" FontSize="20"  Text="{Binding Dorf.Departement.Name}"/>
+                                </HeaderedContentControl>
+                                <HeaderedContentControl Header="Herkunft>Sprachgruppe">
+                                    <TextBlock Padding="10 0 0 5" FontSize="20"  Text="{Binding Dorf.Sprachgruppe.Name}"/>
+                                </HeaderedContentControl>
+                                <HeaderedContentControl Header="Kategorie">
+                                    <TextBlock Padding="10 0 0 5" FontSize="20"  Text="{Binding Kategorie.Crumb}"/>
+                                </HeaderedContentControl>
+                                <HeaderedContentControl Header="Beschreibung Material">
+                                    <TextBlock Padding="10 0 0 5" FontSize="20"  Text="{Binding BeschreibungMaterial}"/>
+                                </HeaderedContentControl>
+                                <HeaderedContentControl Header="Beschreibung Herstellung">
+                                    <TextBlock Padding="10 0 0 5" FontSize="20"  Text="{Binding BeschreibungHerstellung}"/>
+                                </HeaderedContentControl>
+                                <HeaderedContentControl Header="Zustand">
+                                    <TextBlock Padding="10 0 0 5" FontSize="20"  Text="{Binding Zustand}"/>
+                                </HeaderedContentControl>
+                                <HeaderedContentControl Header="Masse">
+                                    <TextBlock Padding="10 0 0 5" FontSize="20"  Text="{Binding Masse}"/>
+                                </HeaderedContentControl>
+                                <HeaderedContentControl Header="Erworben / Bei">
+                                    <TextBlock Padding="10 0 0 5" FontSize="20"  Text="{Binding ErworbenBei}"/>
+                                </HeaderedContentControl>
+                                <HeaderedContentControl Header="Datierung">
+                                    <TextBlock Padding="10 0 0 5" FontSize="20"  Text="{Binding Datierung}"/>
+                                </HeaderedContentControl>
+                                <HeaderedContentControl Header="Versicherungswert">
+                                    <TextBlock Padding="10 0 0 5" FontSize="20"  Text="{Binding Versicherungswert}"/>
+                                </HeaderedContentControl>
+                                <HeaderedContentControl Header="Bemerkungen">
+                                    <TextBlock Padding="10 0 0 5" FontSize="20"  Text="{Binding Herkunft}"/>
+                                </HeaderedContentControl>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid x:Name="MetadataPanel" Height="Auto" Width="Auto" Visibility="{Binding MetadataPanelVisibility}" local:GridExtention.CompactColumnDefinitions="* * * *" local:GridExtention.CompactRowDefinitions="* auto">
+            <Border BorderThickness="0.5" BorderBrush="LightGray" Grid.Column="0" Grid.Row="0">
+                <Grid local:GridExtention.CompactRowDefinitions="* auto auto auto auto">
+                    <ListBox x:Name="DepartementeMeta" Grid.Row="0" ItemsSource="{Binding Departemnte}" SelectionMode="Single" SelectionChanged="OnMetadataDepartementSelected">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Label Grid.Row="1" Content="Departemente"/>
+                    <Border CornerRadius="30" BorderBrush="Black" BorderThickness="0.5" Grid.Row="2">
+                        <StackPanel Margin="10 10 10 10">
+                            <HeaderedContentControl Header="Name">
+                                <TextBox x:Name="NewDepartementTextbox"/>
+                            </HeaderedContentControl>
+                        </StackPanel>
+                    </Border>
+                    <Grid Grid.Row="3" Height="50" IsEnabled="{Binding DepartementEditEnabeled}" local:GridExtention.CompactColumnDefinitions="* *">
+                        <Button Content="Speichern" Grid.Column="0" Click="OnEditDepartement"/>
+                        <Button Content="Abbrechen" Grid.Column="1" Click="OnUnloadDepartement"/>
+                    </Grid>
+                    <Button Grid.Row="4" Click="OnNewDepartement" Height="50">Hinzufügen</Button>
+                </Grid>
+            </Border>
+            <Border BorderThickness="0.5" BorderBrush="LightGray" Grid.Column="1" Grid.Row="0">
+                <Grid local:GridExtention.CompactRowDefinitions="* auto auto auto auto">
+                    <ListBox x:Name="SprachgruppeMeta" Grid.Row="0" ItemsSource="{Binding Sprachgruppen}" SelectionMode="Single" SelectionChanged="OnMetadataSprachgruppeSelected">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Label Grid.Row="1" Content="Sprachgruppen"/>
+
+                    <Border CornerRadius="30" BorderBrush="Black" BorderThickness="0.5" Grid.Row="2">
+                        <StackPanel Margin="10 10 10 10">
+                            <HeaderedContentControl Header="Name">
+                                <TextBox x:Name="NewSprachgruppeTextbox"/>
+                            </HeaderedContentControl>
+                        </StackPanel>
+                    </Border>
+                    <Grid Grid.Row="3" Height="50" IsEnabled="{Binding SprachgruppeEditEnabeled}" local:GridExtention.CompactColumnDefinitions="* *">
+                        <Button Content="Speichern" Grid.Column="0" Click="OnEditSprachgruppe"/>
+                        <Button Content="Abbrechen" Grid.Column="1" Click="OnUnloadSprachgruppe"/>
+                    </Grid>
+                    <Button Grid.Row="4" Click="OnNewSprachgruppe" Height="50">Hinzufügen</Button>
+                </Grid>
+
+            </Border>
+            <Border BorderThickness="0.5" BorderBrush="LightGray" Grid.Column="2" Grid.Row="0">
+                <Grid local:GridExtention.CompactRowDefinitions="* auto auto auto auto">
+                    <ListBox x:Name="DorfMeta" Grid.Row="0" ItemsSource="{Binding Dörfer}" SelectionMode="Single" SelectionChanged="OnMetadataDorfSelected">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Label Grid.Row="1" Content="Dörfer"/>
+
+                    <Border CornerRadius="30" BorderBrush="Black" BorderThickness="0.5" Grid.Row="2">
+                        <StackPanel Margin="10 10 10 10">
+                            <HeaderedContentControl Header="Name">
+                                <TextBox x:Name="NewDorfTextbox"/>
+                            </HeaderedContentControl>
+                            <HeaderedContentControl Header="Departement">
+                                <ComboBox x:Name="NewDorfDepartement" ItemsSource="{Binding Departemnte}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}"></TextBlock>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </HeaderedContentControl>
+                            <HeaderedContentControl Header="Sprachgruppe">
+                                <ComboBox x:Name="NewDorfSprachgrupe" ItemsSource="{Binding Sprachgruppen}">
+
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}"></TextBlock>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </HeaderedContentControl>
+                        </StackPanel>
+                    </Border>
+                    <Grid Grid.Row="3" Height="50" IsEnabled="{Binding DorfEditEnabeled}" local:GridExtention.CompactColumnDefinitions="* *">
+                        <Button Content="Speichern" Grid.Column="0" Click="OnEditDorf"/>
+                        <Button Content="Abbrechen" Grid.Column="1" Click="OnUnloadDorf"/>
+                    </Grid>
+                    <Button Grid.Row="4" Click="OnNewDorf" Height="50">Hinzufügen</Button>
+                </Grid>
+
+            </Border>
+            <Border BorderThickness="0.5" BorderBrush="LightGray" Grid.Column="3" Grid.Row="0">
+                <Grid local:GridExtention.CompactRowDefinitions="* auto auto auto auto">
+                    <ListBox x:Name="KategorieMeta" Grid.Row="0" ItemsSource="{Binding Kategorien}" SelectionMode="Single" SelectionChanged="OnMetadataKategorieSelected">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Label Grid.Row="1" Content="Kategorien"/>
+
+                    <Border CornerRadius="30" BorderBrush="Black" BorderThickness="0.5" Grid.Row="2">
+                        <StackPanel Margin="10 10 10 10">
+                            <HeaderedContentControl Header="Name">
+                                <TextBox x:Name="NewKategorieTextbox"/>
+                            </HeaderedContentControl>
+                            <HeaderedContentControl Header="Oberkategorie">
+                                <ComboBox x:Name="NewKategorieOberkategorie" ItemsSource="{Binding Kategorien}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}"></TextBlock>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </HeaderedContentControl>
+                        </StackPanel>
+                    </Border>
+                    <Grid Grid.Row="3" Height="50" IsEnabled="{Binding KategorieEditEnabeled}" local:GridExtention.CompactColumnDefinitions="* *">
+                        <Button Content="Speichern" Grid.Column="0" Click="OnEditKategorie"/>
+                        <Button Content="Abbrechen" Grid.Column="1" Click="OnUnloadKategorie"/>
+                    </Grid>
+                    <Button Grid.Row="4" Click="OnNewKategorie" Height="50">Hinzufügen</Button>
+                </Grid>
+            </Border>
+
+            <Button Click="OnShowMain" Grid.Row="1" Grid.ColumnSpan="4" Grid.Column="0" Height="50">Zurück</Button>
+        </Grid>
+    </Grid>
+</Window>

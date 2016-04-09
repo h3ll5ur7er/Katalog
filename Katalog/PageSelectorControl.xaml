@@ -1,0 +1,38 @@
+﻿<UserControl x:Name="userControl" x:Class="Katalog.PageSelectorControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Katalog"
+             mc:Ignorable="d" 
+             MaxHeight="40"
+             d:DesignHeight="20" d:DesignWidth="100"
+             d:DataContext="{StaticResource MainViewModel}">
+    <Grid>
+        <Grid.Resources>
+            <local:DivideBy2Converter x:Key="DivideBy2Converter" />
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*" MaxWidth="100"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="0" Click="OnLeftClick" Command="{Binding OnPageChanged}" IsEnabled="{Binding IsLeftEnabled, ElementName=userControl}">
+            <Image Source="Assets/Icons/arrow-icon.png" x:Name="LeftArrowImage">
+                <Image.RenderTransform>
+                    <RotateTransform CenterX="{Binding ActualWidth,ElementName=LeftArrowImage, Converter={StaticResource DivideBy2Converter}}" CenterY="{Binding ActualHeight,ElementName=LeftArrowImage, Converter={StaticResource DivideBy2Converter}}" Angle="180"/>
+                </Image.RenderTransform>
+            </Image>
+        </Button>
+        
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center">
+            <Run Text="{Binding CurrentPage,ElementName=userControl}"></Run>
+            <Run Text=" / "></Run>
+            <Run Text="{Binding TotalPages,ElementName=userControl}"></Run>
+        </TextBlock>
+        
+        <Button Grid.Column="2" Click="OnRightClick" IsEnabled="{Binding IsRightEnabled, ElementName=userControl}">
+            <Image Source="Assets/Icons/arrow-icon.png"/>
+        </Button>
+    </Grid>
+</UserControl>
